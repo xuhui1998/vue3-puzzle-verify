@@ -10,15 +10,14 @@ export default defineConfig({
     // 库编译模式配置
     lib: {
       entry: path.resolve(__dirname, "./src/components/index.ts"), // 指定组件编译入口文件
-      name: "SliderVerifyVue3",
+      name: "Vue3PuzzleVerify",
       cssFileName: "style",
-      fileName: (format) => `slider-verify-vue3.${format}.js`,
-      // formats: ["es", "umd", 'cjs'],
+      fileName: (format) => `vue3-puzzle-verify.${format}.js`,
     },
     rollupOptions: {
       // 确保外部化处理那些
       // 你不想打包进库的依赖
-      external: ['vue', 'gif'],
+      external: ['vue'],
       output: {
         // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
         // 提供一个全局变量

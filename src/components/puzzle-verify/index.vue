@@ -55,8 +55,8 @@ const drag = ref();
 const sliderBlock = ref();
 const sliderFill = ref();
 const currentPuzzle = ref({
-  backImg: '/src/assets/images/bg/1.jpg',
-  blockImg: '/src/assets/images/bg-block/1.png',
+  backImg: '../../assets/images/bg/1.jpg',
+  blockImg: '../../assets/images/bg-block/1.png',
   x: 120,
 });
 const dragBlockStyle = ref({
@@ -71,43 +71,43 @@ let offsetX = ref(0);
 
 const sliderInfo = [
   {
-    backImg: '/src/assets/images/bg/1.jpg',
-    blockImg: '/src/assets/images/bg-block/1.png',
+    backImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/59Cu4kNYM1mj7dhB9IAD0DrcPdgzXeAv/bg-1.jpg',
+    blockImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/P6ffi1OdnJ0kUTgzj4Mek4d897XmvxKI/block-1.png',
     x: 120,
   },
   {
-    backImg: '/src/assets/images/bg/2.jpg',
-    blockImg: '/src/assets/images/bg-block/2.png',
+    backImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/1q5iWUnzfUOxRLE68LM27Ogm4uz8ctOg/bg-2.jpg',
+    blockImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/hgLgLgxr0wzlHxAUFCF1QO6u4F8I8waj/block-2.png',
     x: 86,
   },
   {
-    backImg: '/src/assets/images/bg/3.jpg',
-    blockImg: '/src/assets/images/bg-block/3.png',
+    backImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/D5ILHWHJWu6I2PQ4ltCujxjkl5S4o0Io/bg-3.jpg',
+    blockImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/X554G805mj9H58D3cv1FISOCq9kpwh5K/block-3.png',
     x: 150,
   },
   {
-    backImg: '/src/assets/images/bg/4.jpg',
-    blockImg: '/src/assets/images/bg-block/4.png',
+    backImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/sx4Wr4PDISAxe3DWwyxXK9Gp4PkPXoUm/bg-4.jpg',
+    blockImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/g1EzR0l04lwvPpa43pQjsLeTdjSdHODF/block-4.png',
     x: 142,
   },
   {
-    backImg: '/src/assets/images/bg/5.jpg',
-    blockImg: '/src/assets/images/bg-block/5.png',
+    backImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/zukCx9wdRl4Ld39rN8cXJqofetp4aFLH/bg-5.jpg',
+    blockImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/hKi4kiBdGe6SMMPtQlOcrf8RYKkVxcdy/block-5.png',
     x: 186,
   },
   {
-    backImg: '/src/assets/images/bg/6.jpg',
-    blockImg: '/src/assets/images/bg-block/6.png',
+    backImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/89rCBs76bghwC0QIsxfXxfjUxQTwT1u5/bg-6.jpg',
+    blockImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/MRFz26fh9AL1CmjlwXBMxEd4pRN6B8XR/block-6.png',
     x: 155,
   },
   {
-    backImg: '/src/assets/images/bg/7.jpg',
-    blockImg: '/src/assets/images/bg-block/7.png',
+    backImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/lmxXBSBy76cUgDCWUWuslWvHwOICtm3x/bg-7.jpg',
+    blockImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/X91NtOkw0FugeDSyi3l9nRuRr2d2O9XE/block-7.png',
     x: 153,
   },
   {
-    backImg: '/src/assets/images/bg/8.jpg',
-    blockImg: '/src/assets/images/bg-block/8.png',
+    backImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/4CUht3QeNkqe93JFX275TfBunVfbb3Wh/bg-8.jpg',
+    blockImg: 'http://lc-uwPGwsAs.cn-n1.lcfile.com/uezXcJVHACn8x9sxtH5eGao3OIAJM05z/block-8.png',
     x: 150,
   },
 ]
@@ -187,11 +187,11 @@ onMounted(() => {
     position: absolute;
     right: 10px;
     top: 10px;
-    width: 26px;
+    width: 24px;
     z-index: 9;
     cursor: pointer;
     &:hover {
-      transform: rotate(180deg);
+      transform: rotate(-180deg);
       transition: all 0.5s;
     }
   }

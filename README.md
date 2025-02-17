@@ -44,6 +44,7 @@ createApp(App).use(PuzzleVerify)
 | 参数 | 类型 | 默认值 | 描述 |
 | --- | --- | --- | --- |
 | v-model | Boolean | false | 校验是否通过 |
+| type | 'insert' 'modal' 'popover' | 'insert' | 展示模式 |
 
 
 | 方法  | 描述 |

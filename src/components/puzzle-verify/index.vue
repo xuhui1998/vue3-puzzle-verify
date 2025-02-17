@@ -3,7 +3,7 @@
   <div v-if="type === 'insert' || type === 'popover'" class="puzzle-wrapper">
     <!-- 浮窗卡片模式 -->
     <transition name="slide-up-down">
-      <div v-if="showPopover" :class="{ 'popover': type === 'popover' }">
+      <div v-if="showPopover && type === 'popover'" :class="{ 'popover': type === 'popover' }">
         <img :src="IconRefresh" class="refresh" @click="reset" alt="">
         <div class="img-bg" >
           <img :src="currentPuzzle.backImg" alt="">
@@ -13,6 +13,15 @@
         </div>
       </div>
     </transition>
+    <div v-if="type === 'insert'">
+      <img :src="IconRefresh" class="refresh" @click="reset" alt="">
+      <div class="img-bg" >
+        <img :src="currentPuzzle.backImg" alt="">
+      </div>
+      <div class="img-block" :style="{ left: dragBlockStyle.left }">
+        <img :src="currentPuzzle.blockImg" alt="">
+      </div>
+    </div>
 
     <div :class="['drag', `drag-${sliderStatus}`]" ref="drag" @mousemove="showPopover = true" @mouseleave="showPopover = false">
       <!-- 已拖动的滑块填充色 -->
@@ -189,7 +198,7 @@ const onDrag = (event: MouseEvent) => {
 };
 
 const startDrag = (event: MouseEvent) => {
-  if (verifyPass.value) return;
+  // if (verifyPass.value) return;
   isDragging.value = true;
   startX.value = event.clientX;
   document.addEventListener("mousemove", onDrag);
@@ -213,6 +222,8 @@ const endDrag = () => {
     sliderStatus.value = "success";
     setTimeout(() => {
       close();
+      setDefault();
+      init();
     }, 1000);
     emit("onSuccess", verifyPass.value);
   } else {

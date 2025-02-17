@@ -1,7 +1,7 @@
 {
   "name": "vue3-puzzle-verify",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.4",
   "type": "module",
   "description": "一个基于vue3的滑块校验组件",
   "main": "lib/vue3-puzzle-verify.es.js",

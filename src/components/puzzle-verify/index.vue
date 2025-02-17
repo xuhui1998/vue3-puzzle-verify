@@ -1,5 +1,47 @@
-<template>
-  <div class="puzzle-wrapper">
+<template> 
+  <!-- 内嵌模式 -->
+  <div v-if="type === 'insert' || type === 'popover'" class="puzzle-wrapper">
+    <!-- 浮窗卡片模式 -->
+    <transition name="slide-up-down">
+      <div v-if="showPopover" :class="{ 'popover': type === 'popover' }">
+        <img :src="IconRefresh" class="refresh" @click="reset" alt="">
+        <div class="img-bg" >
+          <img :src="currentPuzzle.backImg" alt="">
+        </div>
+        <div class="img-block" :style="{ left: dragBlockStyle.left }">
+          <img :src="currentPuzzle.blockImg" alt="">
+        </div>
+      </div>
+    </transition>
+
+    <div :class="['drag', `drag-${sliderStatus}`]" ref="drag" @mousemove="showPopover = true" @mouseleave="showPopover = false">
+      <!-- 已拖动的滑块填充色 -->
+      <div class="slider-fill" ref="sliderFill"></div>
+      <!-- 滑块 -->
+      <div class="slider-thumb" ref="sliderBlock" @mousedown="startDrag">
+        <img
+          v-if="sliderStatus === 'default'"
+          :src="IconDoubleRight"
+          class="slider-icon"
+        />
+        <img
+          v-if="sliderStatus === 'success'"
+          :src="IconCheck"
+          class="slider-icon"
+        />
+        <img
+          v-if="sliderStatus === 'fail'"
+          :src="IconFail"
+          class="slider-icon"
+        />
+      </div>
+      <!-- 文字提示 -->
+      <div v-if="sliderStatus === 'default' && !isDragging" class="slider-tips">按住按钮完成验证</div>
+    </div>
+  </div>
+  <!-- 弹窗模式 -->
+  <Modal v-if="type === 'modal' && modalVisible" v-model:visible="modalVisible">
+    <div class="puzzle-wrapper">
     <img :src="IconRefresh" class="refresh" @click="reset" alt="">
     <div class="img-bg" >
       <img :src="currentPuzzle.backImg" alt="">
@@ -30,9 +72,10 @@
         />
       </div>
       <!-- 文字提示 -->
-      <div class="slider-tips">{{ sliderStatus === 'success' ? '验证通过' : '按住按钮完成验证' }}</div>
+      <div v-if="sliderStatus === 'default' && !isDragging" class="slider-tips">按住按钮完成验证</div>
     </div>
   </div>
+  </Modal>
 </template>
 
 <script lang="ts" setup>
@@ -42,10 +85,11 @@ import IconCheck from "../../assets/icons/check.svg";
 import IconFail from "../../assets/icons/fail.svg";
 import IconRefresh from "../../assets/icons/refresh.svg";
 import type { SliderStatus, Props } from "./types";
+import Modal from '../modal/index.vue';
 
-// const props = withDefaults(defineProps<Props>(), {
-//   width: 300,
-// });
+const props = withDefaults(defineProps<Props>(), {
+  type: 'insert',
+});
 const emit = defineEmits<{
   (e: "onSuccess", status: boolean): void;
   (e: "onFail", status: boolean): void;
@@ -60,6 +104,7 @@ const sliderStatus = ref<SliderStatus>("default");
 const drag = ref();
 const sliderBlock = ref();
 const sliderFill = ref();
+const modalVisible = ref(false);
 const currentPuzzle = ref({
   backImg: '../../assets/images/bg/1.jpg',
   blockImg: '../../assets/images/bg-block/1.png',
@@ -70,6 +115,8 @@ const dragBlockStyle = ref({
 });
 // 是否拖动滑块
 const isDragging = ref(false);
+// 是否展示浮窗
+const showPopover = ref(false);
 //存储鼠标按下的x坐标
 const startX = ref(0);
 //存储移动的位置
@@ -118,6 +165,14 @@ const sliderInfo = [
   },
 ]
 
+const open = () => {
+  modalVisible.value = true;
+};
+
+const close = () => {
+  modalVisible.value = false;
+};
+
 const onDrag = (event: MouseEvent) => {
   if (!isDragging.value) return;
   // 计算移动的位置
@@ -156,6 +211,9 @@ const endDrag = () => {
     // console.log("验证成功");
     verifyPass.value = true;
     sliderStatus.value = "success";
+    setTimeout(() => {
+      close();
+    }, 1000);
     emit("onSuccess", verifyPass.value);
   } else {
     verifyPass.value = false;
@@ -185,6 +243,8 @@ const reset = () => {
 
 defineExpose({
   onReset: reset,
+  open,
+  close,
   modelValue: verifyPass.value
 });
 
@@ -201,7 +261,6 @@ defineOptions({
 .puzzle-wrapper {
   position: relative;
   width: 300px;
-  height: 150px;
   .refresh {
     position: absolute;
     right: 10px;
@@ -213,6 +272,10 @@ defineOptions({
       transform: rotate(-180deg);
       transition: all 0.5s;
     }
+  }
+  .popover {
+    position: absolute;
+    top: -160px;
   }
   .img-content {
     background-size: 100% 100%;
@@ -240,7 +303,7 @@ defineOptions({
 
   .img-bg {
     width: 100%;
-    height: 100%;
+    height: 150px;
     position: relative;
     img {
       width: 100%;
@@ -334,5 +397,15 @@ defineOptions({
       color: #4caf50;
     }
   }
+}
+.slide-up-down-enter-from,
+.slide-up-down-leave-to {
+  transform: translateY(40px);
+  opacity: 0;
+}
+
+.slide-up-down-enter-active,
+.slide-up-down-leave-active {
+  transition: all 0.6s ease;
 }
 </style>

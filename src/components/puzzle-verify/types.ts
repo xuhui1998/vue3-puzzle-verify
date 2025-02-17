@@ -1,5 +1,7 @@
 export type SliderStatus = "default" | "success" | "fail";
+export type PuzzleType = "modal" | "insert" | "popover";
 
 export interface Props {
-  width?: string | number;
+  type?: PuzzleType;
+  visible?: boolean;
 }

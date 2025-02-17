@@ -1,4 +1,4 @@
-import PuzzleVerify from './puzzle-verify/index.vue'
+import PuzzleVerify from './puzzle-verify/graphic.vue'
 import type { App } from 'vue';
 
 export { PuzzleVerify };

@@ -11,30 +11,50 @@
 
 ```shell
 # npm 安装：
-npm install slider-verify-vue3 
+npm install vue3-puzzle-verify
 
 # yarn 安装：
-yarn add slider-verify-vue3
+yarn add vue3-puzzle-verify
 ```
 
 2. 引入插件
 ```js
-import SliderVerify from 'slider-verify-vue3'
-import 'slider-verify-vue3/lib/style.css';
-createApp(App).use(SliderVerify)
+import PuzzleVerify from 'vue3-puzzle-verify'
+import 'vue3-puzzle-verify/lib/style.css'
+createApp(App).use(PuzzleVerify)
 ```
 
 3. 使用插件
 ```html
   <template>
     <div>
-      <SliderVerify v-model="isPass" />
+      <PuzzleVerify v-model="modelValue" />
     </div>
   </template>
 
   <script>
     import { ref } from 'vue'
 
-    const isPass = ref(false)
+    const modelValue = ref(false)
   </script>
 ```
+
+4. 配置参数
+
+| 参数 | 类型 | 默认值 | 描述 |
+| --- | --- | --- | --- |
+| v-model | Boolean | false | 校验是否通过 |
+
+
+| 方法  | 描述 |
+| --- | --- |
+| onReset | 刷新 |
+
+
+| 事件  | 描述 |
+| --- | --- |
+| onSuccess | 校验通过 |
+| onFail | 校验失败 |
+| onDrag | 拖动滑块 |
+| onDragEnd | 停止拖动 |
+

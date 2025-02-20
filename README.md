@@ -7,6 +7,9 @@
   </a>
 </p>
 
+### 演示地址
+> [https://xuhui1998.github.io/vue3-puzzle-verify/demo.html](https://xuhui1998.github.io/vue3-puzzle-verify/demo.html)
+
 1. 安装插件
 
 ```shell

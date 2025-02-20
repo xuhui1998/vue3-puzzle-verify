@@ -1,7 +1,6 @@
 <template>
   <div class="content">
-    <div>111</div>
-    <PuzzleVerify ref="puzzleVerifyRef" type="insert"></PuzzleVerify>
+    <PuzzleVerify ref="puzzleVerifyRef" type="popover"></PuzzleVerify>
     <button @click="openModal">open modal</button>
     <button @click="onReset">reset</button>
   </div>

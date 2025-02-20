@@ -1,17 +1,22 @@
 <template>
   <div class="content">
     <div>111</div>
-    <PuzzleVerify ref="puzzleVerify" type="popover"></PuzzleVerify>
+    <PuzzleVerify ref="puzzleVerifyRef" type="insert"></PuzzleVerify>
     <button @click="openModal">open modal</button>
+    <button @click="onReset">reset</button>
   </div>
 </template>
 <script setup lang="ts">
   import { ref } from 'vue'
 
-  const puzzleVerify = ref()
+  const puzzleVerifyRef = ref()
 
   const openModal = () => {
-    puzzleVerify.value.open()
+    puzzleVerifyRef.value.open()
+  };
+
+  const onReset = () => {
+    puzzleVerifyRef.value.reset()
   };
 </script>
 

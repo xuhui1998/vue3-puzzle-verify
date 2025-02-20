@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue3-Puzzle-Verify</title>
+  <link rel="stylesheet" href="./lib/style.css"></link>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css" />
+</head>
+<style>
+  #app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 150px 0;
+  }
+  .model {
+    margin-top: 20px;
+  }
+</style>
+<body>
+  <div id="app">
+    <div class="settings">
+      <el-form inline>
+        <el-form-item label="类型">
+          <el-radio-group v-model="type">
+            <el-radio-button label="insert"></el-radio-button>
+            <el-radio-button label="modal"></el-radio-button>
+            <el-radio-button label="popover"></el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+    </div>
+    <el-button v-if="type === 'modal'" type="primary" @click="openVerify">校验</el-button>
+    <div class="puzzle-verify">
+      <puzzle-verify
+        ref="puzzleVerify"
+        v-model="isVerify"
+        :type="type"
+      ></puzzle-verify>
+    </div>
+  </div>
+</body>
+<script src="https://unpkg.com/vue@3.5.13/dist/vue.global.js"></script>
+<script src="./lib/vue3-puzzle-verify.umd.js"></script>
+<script src="https://unpkg.com/element-plus"></script>
+<script>
+  const PuzzleVerify  = Vue3PuzzleVerify.default;
+  console.log(Vue3PuzzleVerify);
+  const app = Vue.createApp({
+    data() {
+      return {
+        isVerify: false,
+        type: 'insert',
+      };
+    },
+    methods: {
+      openVerify() {
+        this.$refs.puzzleVerify.open();
+      }
+    }
+  });
+  app.use(PuzzleVerify).use(ElementPlus).mount('#app');
+</script>
+</html>

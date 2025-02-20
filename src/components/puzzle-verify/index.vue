@@ -1,9 +1,9 @@
 <template> 
   <!-- 内嵌模式 -->
-  <div v-if="type === 'insert' || type === 'popover'" class="puzzle-wrapper">
+  <div v-if="type === 'insert' || type === 'popover'" class="puzzle-wrapper" @mousemove="showPopover = true" @mouseleave="showPopover = false">
     <!-- 浮窗卡片模式 -->
     <transition name="slide-up-down">
-      <div v-if="showPopover && type === 'popover'" :class="{ 'popover': type === 'popover' }">
+      <div v-show="showPopover && type === 'popover'" :class="{ 'popover': type === 'popover' }">
         <img :src="IconRefresh" class="refresh" @click="reset" alt="">
         <div class="img-bg" >
           <img :src="currentPuzzle.backImg" alt="">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </transition>
-    <div v-if="type === 'insert'">
+    <div v-show="type === 'insert'">
       <img :src="IconRefresh" class="refresh" @click="reset" alt="">
       <div class="img-bg" >
         <img :src="currentPuzzle.backImg" alt="">
@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div :class="['drag', `drag-${sliderStatus}`]" ref="drag" @mousemove="showPopover = true" @mouseleave="showPopover = false">
+    <div :class="['drag', `drag-${sliderStatus}`]" ref="drag">
       <!-- 已拖动的滑块填充色 -->
       <div class="slider-fill" ref="sliderFill"></div>
       <!-- 滑块 -->
@@ -184,6 +184,7 @@ const close = () => {
 
 const onDrag = (event: MouseEvent) => {
   if (!isDragging.value) return;
+  showPopover.value = true;
   // 计算移动的位置
   offsetX.value = event.pageX - startX.value;
   //判断移动距离是否正确
@@ -198,8 +199,9 @@ const onDrag = (event: MouseEvent) => {
 };
 
 const startDrag = (event: MouseEvent) => {
-  // if (verifyPass.value) return;
+  if (verifyPass.value) return;
   isDragging.value = true;
+  showPopover.value = true;
   startX.value = event.clientX;
   document.addEventListener("mousemove", onDrag);
   document.addEventListener("mouseup", endDrag);
@@ -214,6 +216,7 @@ const setDefault = () => {
 
 const endDrag = () => {
   isDragging.value = false;
+  showPopover.value = false;
   emit('onDragEnd');
   // 误差范围2px
   if (offsetX.value >= currentPuzzle.value.x - 2 && offsetX.value <= currentPuzzle.value.x + 2) {
@@ -222,8 +225,8 @@ const endDrag = () => {
     sliderStatus.value = "success";
     setTimeout(() => {
       close();
-      setDefault();
-      init();
+      // setDefault();
+      // init();
     }, 1000);
     emit("onSuccess", verifyPass.value);
   } else {
@@ -253,7 +256,7 @@ const reset = () => {
 };
 
 defineExpose({
-  onReset: reset,
+  reset,
   open,
   close,
   modelValue: verifyPass.value
@@ -286,7 +289,7 @@ defineOptions({
   }
   .popover {
     position: absolute;
-    top: -160px;
+    top: -150px;
   }
   .img-content {
     background-size: 100% 100%;
@@ -329,6 +332,8 @@ defineOptions({
     img {
       width: 100%;
       height: 100%;
+      user-select: none;
+      pointer-events: none;
     }
   }
 
